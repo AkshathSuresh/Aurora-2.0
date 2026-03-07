@@ -1,5 +1,6 @@
 // src/pages/api/posts/index.ts
 import type { NextApiRequest, NextApiResponse } from "next";
+import { revalidatePath } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
 import matter from "gray-matter";
 
@@ -103,6 +104,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(500).json({ ok: false, error: error.message || "Failed to create post" });
       }
 
+      revalidatePath("/");
+      revalidatePath("/tags");
       return res.status(201).json({ ok: true, post: data });
     } catch (e: any) {
       console.error("create post error", e);

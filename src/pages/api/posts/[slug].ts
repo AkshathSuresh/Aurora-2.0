@@ -1,5 +1,6 @@
 // src/pages/api/posts/[slug].ts
 import type { NextApiRequest, NextApiResponse } from "next";
+import { revalidatePath } from "next/cache";
 import { createClient } from "@supabase/supabase-js";
 import matter from "gray-matter";
 
@@ -151,6 +152,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Insert new post with new slug
         const { data, error } = await supabase.from("posts").insert(updateData).select().single();
         if (error) throw error;
+        revalidatePath("/");
+        revalidatePath("/tags");
+        revalidatePath(`/posts/${slug}`);
+        revalidatePath(`/posts/${targetSlug}`);
         return res.status(200).json({ ok: true, slug: targetSlug, post: data });
       } else {
         // Update existing post
@@ -161,6 +166,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           .select()
           .single();
         if (error) throw error;
+        revalidatePath("/");
+        revalidatePath("/tags");
+        revalidatePath(`/posts/${slug}`);
         return res.status(200).json({ ok: true, slug: targetSlug, post: data });
       }
     } catch (e: any) {
@@ -204,6 +212,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(500).json({ ok: false, error: error.message || "Delete failed" });
       }
 
+      revalidatePath("/");
+      revalidatePath("/tags");
+      revalidatePath(`/posts/${slug}`);
       return res.status(200).json({ ok: true, removed: removalResults });
     } catch (e: any) {
       console.error("delete post error", e);
