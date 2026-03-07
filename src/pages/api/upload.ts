@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import formidable from "formidable";
 import fs from "fs";
 import path from "path";
+import os from "os";
 import sharp from "sharp";
 import { createClient } from "@supabase/supabase-js";
 
@@ -31,8 +32,8 @@ function safeName(name: string) {
 }
 
 async function parseForm(req: NextApiRequest): Promise<{ fields: any; files: any }> {
-  // Formidable still writes a temporary file; we will read & convert it and then remove
-  const tmpDir = path.join(process.cwd(), "tmp");
+  // Use os.tmpdir() so uploads work on Vercel/serverless (/tmp is writable; process.cwd() is read-only)
+  const tmpDir = path.join(os.tmpdir(), "upload-" + Date.now());
   await fs.promises.mkdir(tmpDir, { recursive: true });
 
   const form = formidable({

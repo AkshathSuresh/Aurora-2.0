@@ -58,7 +58,7 @@ export const getStaticProps: GetStaticProps = async () => {
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
 
-  return { props: { tags } };
+  return { props: { tags }, revalidate: 60 };
 };
 
 

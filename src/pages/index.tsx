@@ -126,6 +126,6 @@ export default function Home({ posts }: Props) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const posts = await getAllPosts();
-  return { props: { posts } };
+  return { props: { posts }, revalidate: 60 };
 };
 

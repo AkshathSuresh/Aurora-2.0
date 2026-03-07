@@ -66,7 +66,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     (p.tags || []).some((t) => String(t).trim().toLowerCase() === tag.trim().toLowerCase())
   );
 
-  return { props: { tag, posts } };
+  return { props: { tag, posts }, revalidate: 60 };
 };
 
 
