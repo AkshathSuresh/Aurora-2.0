@@ -152,10 +152,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         // Insert new post with new slug
         const { data, error } = await supabase.from("posts").insert(updateData).select().single();
         if (error) throw error;
-        revalidatePath("/");
-        revalidatePath("/tags");
-        revalidatePath(`/posts/${slug}`);
-        revalidatePath(`/posts/${targetSlug}`);
+        try {
+          revalidatePath("/");
+          revalidatePath("/tags");
+          revalidatePath(`/posts/${slug}`);
+          revalidatePath(`/posts/${targetSlug}`);
+        } catch (_) {}
         return res.status(200).json({ ok: true, slug: targetSlug, post: data });
       } else {
         // Update existing post
@@ -166,9 +168,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           .select()
           .single();
         if (error) throw error;
-        revalidatePath("/");
-        revalidatePath("/tags");
-        revalidatePath(`/posts/${slug}`);
+        try {
+          revalidatePath("/");
+          revalidatePath("/tags");
+          revalidatePath(`/posts/${slug}`);
+        } catch (_) {}
         return res.status(200).json({ ok: true, slug: targetSlug, post: data });
       }
     } catch (e: any) {
@@ -212,10 +216,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         return res.status(500).json({ ok: false, error: error.message || "Delete failed" });
       }
 
+      try {
       revalidatePath("/");
       revalidatePath("/tags");
       revalidatePath(`/posts/${slug}`);
-      return res.status(200).json({ ok: true, removed: removalResults });
+    } catch (_) {}
+    return res.status(200).json({ ok: true, removed: removalResults });
     } catch (e: any) {
       console.error("delete post error", e);
       return res.status(500).json({ ok: false, error: e?.message || "Delete failed" });
