@@ -15,6 +15,9 @@ export default function Post({ post }: any) {
         {/* Use a visual wrapper class plus the prose classes directly on the element */}
         <article className="article-wrapper prose prose-sm sm:prose-base md:prose-lg lg:prose-xl prose-slate max-w-none">
           <h1>{post.meta.title}</h1>
+          {post.meta.author && (
+            <p className="text-xs italic text-slate-500 mt-1">By {post.meta.author}</p>
+          )}
           <p className="text-sm text-slate-400">{post.meta.date}</p>
 
           {post.meta.tags && post.meta.tags.length > 0 && (

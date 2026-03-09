@@ -17,6 +17,7 @@ export type PostMeta = {
   tags?: string[]
   cover?: string
   excerpt?: string
+  author?: string | null
 }
 
 export async function getAllPosts(): Promise<PostMeta[]> {
@@ -77,7 +78,8 @@ export async function getPostBySlug(slug: string) {
         date: data.date,
         tags: data.tags || [],
         cover: data.cover || null,
-        excerpt: data.excerpt || ''
+        excerpt: data.excerpt || '',
+        author: (data.frontmatter && (data.frontmatter as any).author) || null
       },
       contentHtml
     }

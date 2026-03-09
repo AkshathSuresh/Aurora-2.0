@@ -56,6 +56,7 @@ export default function AdminPage(): JSX.Element {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState<string>(() => new Date().toISOString().slice(0, 10));
   const [excerpt, setExcerpt] = useState("");
+  const [author, setAuthor] = useState("");
   const [body, setBody] = useState("");
   const [tagsInput, setTagsInput] = useState("");
   const [coverFile, setCoverFile] = useState<File | null>(null);
@@ -260,6 +261,7 @@ export default function AdminPage(): JSX.Element {
               .join("\n")}`;
       const frontmatter = [
         `title: "${title.replace(/"/g, '\\"')}"`,
+        `author: "${author.replace(/"/g, '\\"')}"`,
         `date: "${date}"`,
         `excerpt: "${excerpt.replace(/"/g, '\\"')}"`,
         tagsYaml,
@@ -308,6 +310,7 @@ export default function AdminPage(): JSX.Element {
     setTitle("");
     setDate(new Date().toISOString().slice(0, 10));
     setExcerpt("");
+    setAuthor("");
     setBody("");
     setTagsInput("");
     setCoverFile(null);
@@ -335,6 +338,7 @@ export default function AdminPage(): JSX.Element {
       setTitle(fm.title || "");
       setDate(fm.date ? String(fm.date).slice(0, 10) : new Date().toISOString().slice(0, 10));
       setExcerpt(fm.excerpt || "");
+      setAuthor(fm.author || "");
       setBody(data.body || "");
       const fmTags = Array.isArray(fm.tags) ? fm.tags : [];
       setTagsInput(fmTags.join(", "));
@@ -707,8 +711,8 @@ export default function AdminPage(): JSX.Element {
                   />
                 </div>
 
-                {/* Date + Excerpt */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Date + Excerpt + Author */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-2">Date</label>
                     <input
@@ -732,6 +736,19 @@ export default function AdminPage(): JSX.Element {
                       placeholder="Short summary"
                       className="w-full border rounded-md px-3 py-2 text-sm"
                     />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-slate-700 mb-2">Author</label>
+                    <input
+                      value={author}
+                      onChange={(e) => {
+                        setAuthor(e.target.value);
+                        triggerImmediateSave();
+                      }}
+                      placeholder="e.g. Jane Doe"
+                      className="w-full border rounded-md px-3 py-2 text-sm italic"
+                    />
+                    <p className="mt-1 text-xs text-slate-400 italic">Appears below the title in small italics.</p>
                   </div>
                 </div>
 
