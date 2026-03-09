@@ -60,7 +60,9 @@ export default function Post({ post }: any) {
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getAllPosts();
   const paths = posts.map((p: any) => ({ params: { slug: p.slug } }));
-  return { paths, fallback: false };
+  // Use blocking fallback so new posts created after build
+  // are generated on first request and then cached.
+  return { paths, fallback: "blocking" };
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
