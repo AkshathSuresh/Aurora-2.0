@@ -33,10 +33,10 @@ export default function Header() {
 
             <div className="flex flex-col leading-tight">
               <Link href="/" className="text-lg md:text-xl font-extrabold text-[color:var(--brand)]">
-                Aurora 2.0
+                Nature & Photography Club
               </Link>
               <span className="text-[10px] md:text-xs text-slate-400 hidden sm:inline">
-                Nature & Photography Club
+                Aurora 2.0 Blog
               </span>
             </div>
           </div>
@@ -86,10 +86,10 @@ export default function Header() {
 
             <div className="flex flex-col leading-tight">
               <Link href="/" className="text-xl md:text-2xl font-extrabold text-[color:var(--brand)]">
-                Aurora 2.0
+                Nature & Photography Club
               </Link>
               <span className="text-[10px] md:text-xs text-slate-400 hidden sm:inline">
-                Nature & Photography Club
+                Aurora 2.0 Blog
               </span>
             </div>
           </div>
