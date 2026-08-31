@@ -40,10 +40,10 @@ export default function Home({ posts }: Props) {
           <div className="lg:col-span-2">
             <div className="hero p-4 md:p-8 rounded-2xl">
               <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold leading-tight">
-                About The Club
+                About 
               </h1>
               <p className="mt-3 text-base md:text-lg text-slate-600 max-w-2xl">
-                Nature photography & stories from club members — discover recent captures, and field notes from our community.
+                Nature stories from club members — discover our experiences with nature.
               </p>
 
               <div className="mt-4 md:mt-6 flex items-center gap-3">
