@@ -1,5 +1,3 @@
--- Run this SQL in your Supabase SQL Editor to create the posts table
--- This table will store all published blog posts
 
 CREATE TABLE IF NOT EXISTS posts (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -27,9 +25,7 @@ ALTER TABLE posts ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Posts are viewable by everyone" ON posts
   FOR SELECT USING (true);
 
--- Policy: Only admins can insert/update/delete (you'll need to set up auth)
--- For now, we'll use service role key in API routes, so this is permissive
--- You can tighten this later with proper auth checks
+
 CREATE POLICY "Admins can manage posts" ON posts
   FOR ALL USING (true);
 
